@@ -125,6 +125,18 @@ h3.subheading {
   background-position: center top;
   background-repeat: no-repeat;
 }
+/* Тёмный overlay справа — даёт контраст фото */
+.hero-bg::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to right,
+    transparent 40%,
+    rgba(30,44,69,0.18) 65%,
+    rgba(30,44,69,0.32) 100%
+  );
+  z-index: 1;
+}
 /* Градиент: слева бежевый → справа прозрачно */
 .hero-bg::after {
   content: '';
@@ -183,17 +195,21 @@ h3.subheading {
     align-items: stretch;
     min-height: 0;
   }
-  /* Photo occupies top portion — NO overlay gradient, clear photo */
+  /* Photo occupies top portion — dark navy bg so Viktoria stands out */
   .hero-bg {
     position: relative !important;
     height: 72vw;
     min-height: 280px;
     max-height: 50vh;
-    background-position: center 10%;
+    background-position: center 15%;
     background-size: cover;
+    background-color: #1E2C45;
     flex-shrink: 0;
   }
-  /* Kill the desktop gradient completely on mobile */
+  /* Kill both overlays on mobile — dark bg instead */
+  .hero-bg::before {
+    display: none !important;
+  }
   .hero-bg::after {
     display: none !important;
   }
