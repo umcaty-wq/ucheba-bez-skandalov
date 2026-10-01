@@ -118,7 +118,6 @@ h3.subheading {
   position: relative;
   display: flex; align-items: center;
   overflow: hidden;
-  background: #1E2C45;
 }
 .hero-bg {
   position: absolute; inset: 0;
@@ -132,12 +131,11 @@ h3.subheading {
   position: absolute; inset: 0;
   background: linear-gradient(
     to right,
-    #1E2C45 0%,
-    #1E2C45 38%,
-    rgba(30,44,69,0.92) 50%,
-    rgba(30,44,69,0.5) 65%,
-    rgba(30,44,69,0.1) 80%,
-    transparent 92%
+    #F7F4EE 0%,
+    #F7F4EE 42%,
+    rgba(247,244,238,0.85) 55%,
+    rgba(247,244,238,0.3) 72%,
+    transparent 85%
   );
 }
 .hero-inner {
@@ -148,13 +146,13 @@ h3.subheading {
   padding-left: clamp(28px, 6vw, 80px);
   padding-right: 32px;
 }
-.hero-inner .eyebrow { color: rgba(247,244,238,0.7); }
-.hero-inner h1.display { color: #F7F4EE; }
-.hero-inner h1.display em { color: var(--accent); }
-.hero-inner .lead { color: rgba(247,244,238,0.85); }
-.hero-inner .hero-chip { color: rgba(247,244,238,0.8); }
-.hero-inner .hero-chip b { color: #F7F4EE; }
-.hero-inner .hero-free { color: rgba(247,244,238,0.6); }
+.hero-inner .eyebrow { color: var(--navy); }
+.hero-inner h1.display { color: #1A2234; }
+.hero-inner h1.display em { color: var(--navy); }
+.hero-inner .lead { color: #2D3748; }
+.hero-inner .hero-chip { color: #2D3748; }
+.hero-inner .hero-chip b { color: #1A2234; }
+.hero-inner .hero-free { color: #4A5568; }
 .hero-meta-row {
   display: flex; flex-wrap: wrap; gap: 14px; margin-block: 28px 40px;
 }
@@ -166,12 +164,12 @@ h3.subheading {
 .hero-expert-tag {
   position: absolute; z-index: 3;
   bottom: 36px; right: 36px;
-  background: rgba(30,44,69,0.88); backdrop-filter: blur(14px);
-  border: 1px solid rgba(184,150,90,0.4);
+  background: rgba(255,255,255,0.92); backdrop-filter: blur(14px);
+  border: 1px solid rgba(184,150,90,0.22);
   border-radius: 3px; padding: 12px 18px;
 }
 .hero-expert-tag .name {
-  font-family: var(--serif); font-size: 15px; font-weight: 700; color: #F7F4EE;
+  font-family: var(--serif); font-size: 15px; font-weight: 700; color: #1A2234;
 }
 .hero-expert-tag .title {
   font-size: 10px; color: var(--accent); letter-spacing: .1em;
@@ -203,11 +201,11 @@ h3.subheading {
   .hero-bg::after {
     display: none !important;
   }
-  /* Content sits below photo on solid navy */
+  /* Content sits below photo on solid beige */
   .hero-inner {
     position: static !important;
     z-index: auto;
-    background: #1E2C45;
+    background: #F7F4EE;
     padding: 24px 20px 56px;
     max-width: 100%;
   }
