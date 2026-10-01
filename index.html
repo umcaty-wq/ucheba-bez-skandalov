@@ -177,11 +177,11 @@ h3.subheading {
 }
 /* Мобильный: фото полный экран, текст внизу на плотном фоне */
 @media (max-width: 640px) {
-  /* MOBILE: фото на весь экран, тёмный оверлей, огромный текст */
+  /* MOBILE v3: фото фоном, текст на весь экран сверху донизу */
   .hero {
     min-height: 100svh;
     display: flex;
-    align-items: flex-end;
+    align-items: stretch;
     position: relative;
   }
   .hero-bg {
@@ -190,69 +190,72 @@ h3.subheading {
     background-position: center top;
     background-size: cover;
   }
-  /* Тёмный оверлей снизу — текст читаемый */
+  /* Тёмный оверлей — равномерный, текст везде читается */
   .hero-bg::after {
     display: block !important;
     content: '';
     position: absolute; inset: 0;
     background: linear-gradient(
-      to top,
-      rgba(5,10,20,0.95) 0%,
-      rgba(5,10,20,0.85) 30%,
-      rgba(5,10,20,0.55) 60%,
-      rgba(5,10,20,0.10) 100%
+      to bottom,
+      rgba(5,10,20,0.60) 0%,
+      rgba(5,10,20,0.70) 50%,
+      rgba(5,10,20,0.90) 100%
     );
   }
   .hero-inner {
     position: relative !important;
     z-index: 2;
     background: transparent !important;
-    padding: 0 24px 56px;
+    padding: 72px 24px 56px;
     max-width: 100%;
     width: 100%;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100svh;
   }
   .hero-inner .eyebrow {
-    font-size: 13px;
-    letter-spacing: 0.14em;
-    color: rgba(247,244,238,0.7) !important;
-    margin-bottom: 16px;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    color: rgba(247,244,238,0.75) !important;
+    margin-bottom: 24px;
     text-transform: uppercase;
   }
   .hero-inner h1.display {
-    font-size: clamp(52px, 15vw, 80px) !important;
-    line-height: 0.92 !important;
+    font-size: clamp(56px, 17vw, 88px) !important;
+    line-height: 0.9 !important;
     color: #F7F4EE !important;
     margin-bottom: 0;
-    text-wrap: balance;
+    flex-grow: 1;
   }
   .hero-inner h1.display em {
     color: var(--accent) !important;
     font-style: italic;
+    display: block;
   }
   .hero-inner .lead {
-    font-size: 19px !important;
+    font-size: 18px !important;
     line-height: 1.5 !important;
-    margin-top: 20px !important;
+    margin-top: 28px !important;
     color: rgba(247,244,238,0.92) !important;
     font-weight: 400;
   }
   .hero-meta-row {
     display: flex !important;
     flex-wrap: wrap;
-    gap: 8px 14px;
-    margin-top: 24px !important;
+    gap: 6px 12px;
+    margin-top: 20px !important;
     margin-bottom: 28px !important;
   }
   .hero-chip {
     display: inline-flex !important;
     align-items: center;
-    font-size: 16px !important;
+    font-size: 15px !important;
     color: rgba(247,244,238,0.85) !important;
-    line-height: 1.4;
   }
   .hero-chip b { color: #F7F4EE !important; font-weight: 700; }
-  .hero-chip-sep { font-size: 16px; color: var(--accent); opacity: 0.8; margin: 0 4px; }
+  .hero-chip-sep { font-size: 15px; color: var(--accent); opacity: 0.8; margin: 0 4px; }
   .btn.btn-primary {
     display: block !important;
     width: 100% !important;
@@ -263,7 +266,7 @@ h3.subheading {
     background: var(--accent) !important;
     color: #fff !important;
     border-radius: 4px;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.01em;
     box-sizing: border-box;
   }
   .hero-free {
