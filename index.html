@@ -159,6 +159,7 @@ h3.subheading {
 .hero-chip { display: inline-flex; align-items: center; gap: 0; font-size: 14px; }
 .hero-chip-sep { color: var(--accent); font-size: 14px; padding: 0 6px; opacity: 0.6; }
 .hero-chip b { font-weight: 600; }
+.hero-chip-sub::before { content: "\00a0· "; }
 .hero-chip-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--navy); flex-shrink: 0; }
 .hero-free { margin-top: 14px; font-size: 13px; color: #4A5568; }
 .hero-expert-tag {
@@ -569,6 +570,85 @@ blockquote.expert-quote {
   .event-cell { border-right: none; border-bottom: 1px solid var(--accent-l); }
   .event-cell:last-child { border-bottom: none; }
 }
+/* ── MOBILE READABILITY v4 ── */
+@media (max-width: 640px) {
+  .container { padding-inline: 20px; }
+  .section { padding-block: 64px; }
+
+  /* hero */
+  .hero-inner h1.display { font-size: clamp(56px, 17vw, 96px) !important; line-height: 0.92 !important; }
+  .hero-meta-row {
+    display: grid !important; grid-template-columns: repeat(3, 1fr);
+    gap: 8px; margin-top: 24px !important; margin-bottom: 20px !important;
+  }
+  .hero-chip-sep { display: none !important; }
+  .hero-chip {
+    flex-direction: column; align-items: flex-start !important; gap: 2px;
+    background: rgba(247,244,238,0.08); border: 1px solid rgba(201,169,110,0.4);
+    border-radius: 6px; padding: 10px 12px;
+    font-size: 13px !important; line-height: 1.3;
+  }
+  .hero-chip b { font-size: 16px; }
+  .hero-chip-sub::before { content: none; }
+  .hero-inner .btn.btn-primary {
+    margin-inline: 24px !important; width: calc(100% - 48px) !important;
+    padding: 20px 16px !important; font-size: 19px !important; min-height: 0;
+  }
+  .hero-free { color: rgba(247,244,238,0.75) !important; }
+
+  /* для тебя, если */
+  .audiences { margin-top: 32px; }
+  .audience-card { padding: 28px 20px; gap: 14px; }
+  .audience-headline { font-size: 21px; }
+  .audience-text { font-size: 16px; }
+  .audience-list li { font-size: 15px; color: var(--fg); }
+  .audience-card p[style*="italic"] {
+    color: var(--fg2) !important; font-size: 15px !important;
+    border-left: 2px solid var(--accent); padding-left: 14px;
+  }
+
+  /* боль */
+  .recognition-intro { font-size: 22px; margin-bottom: 28px; }
+  .recog-list li { padding: 16px 0; font-size: 16px; color: var(--fg); gap: 14px; }
+  .pivot { margin-top: 36px; font-size: 28px; }
+
+  /* мечта */
+  .dream-headline { margin-bottom: 28px; }
+  .dream-cell { padding: 22px 20px; flex-direction: row; gap: 16px; align-items: flex-start; }
+  .dream-num { font-size: 34px; opacity: 1; min-width: 44px; }
+  .dream-text { font-size: 16px; }
+
+  /* механизм */
+  .mech-text { font-size: 16px; }
+  .quote-attr { color: var(--fg2); }
+
+  /* программа */
+  .prog-timeline { margin-top: 32px; }
+  .prog-title { font-size: 20px; }
+  .prog-body { font-size: 15px; color: var(--fg); }
+  .prog-time { font-size: 12px; color: var(--accent-d); }
+  .prog-tag { font-size: 10.5px; color: var(--accent-d); border-color: var(--accent); }
+
+  /* эксперт */
+  .expert-card { max-width: none; aspect-ratio: 4/5; }
+  .stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 16px; }
+  .stat:nth-child(3) { grid-column: 1 / -1; }
+  .stat:nth-child(3) .stat-n { font-size: 22px; }
+  .stat-l { color: var(--fg2); }
+
+  /* финал */
+  .cta-wrap { min-height: auto; }
+  .event-strip {
+    display: grid !important; grid-template-columns: 1fr 1fr;
+    width: 100%; margin-block: 28px;
+  }
+  .event-cell { padding: 16px 10px; border-right: 1px solid var(--accent-l); border-bottom: 1px solid var(--accent-l); }
+  .event-cell:nth-child(2n) { border-right: none; }
+  .event-cell:nth-child(n+3) { border-bottom: none; }
+  .event-key { color: var(--fg2); }
+  .btn.btn-primary.btn-large { font-size: 19px !important; padding: 20px 16px !important; min-height: 0; }
+  .cta-note { color: var(--fg2); }
+}
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 
@@ -583,11 +663,11 @@ blockquote.expert-quote {
     <h1 class="display">Учёба<br><em>без скандалов</em></h1>
     <p class="lead" style="margin-top:20px">Как вырастить ребёнка, который идёт сам, достигает вершин и становится выдающимся человеком</p>
     <div class="hero-meta-row">
-      <span class="hero-chip"><b>7 октября</b>&nbsp;· среда</span>
+      <span class="hero-chip"><b>7 октября</b><span class="hero-chip-sub">среда</span></span>
       <span class="hero-chip-sep">·</span>
-      <span class="hero-chip"><b>90 минут</b>&nbsp;· онлайн</span>
+      <span class="hero-chip"><b>90 минут</b><span class="hero-chip-sub">онлайн</span></span>
       <span class="hero-chip-sep">·</span>
-      <span class="hero-chip">бесплатно</span>
+      <span class="hero-chip"><b>бесплатно</b><span class="hero-chip-sub">участие</span></span>
     </div>
     <a href="#register" class="btn btn-primary">Зарегистрироваться бесплатно</a>
     <p class="hero-free">Живой разбор · без обязательств</p>
