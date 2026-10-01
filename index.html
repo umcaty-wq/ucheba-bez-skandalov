@@ -177,86 +177,89 @@ h3.subheading {
 }
 /* Мобильный: фото полный экран, текст внизу на плотном фоне */
 @media (max-width: 640px) {
-  /* ── MOBILE HERO: stacked layout ── */
+  /* MOBILE: фото фоном на весь экран, текст поверх с тёмным оверлеем */
   .hero {
-    flex-direction: column;
-    align-items: stretch;
-    min-height: 0;
+    min-height: 100svh;
+    align-items: flex-end;
   }
-  /* Photo occupies top portion — dark navy bg so Viktoria stands out */
   .hero-bg {
-    position: relative !important;
-    height: 72vw;
-    min-height: 280px;
-    max-height: 50vh;
-    background-position: center 15%;
+    position: absolute !important;
+    inset: 0;
+    background-position: center top;
     background-size: cover;
-    background-color: #1E2C45;
-    flex-shrink: 0;
   }
-  /* Kill both overlays on mobile — dark bg instead */
-  .hero-bg::before {
-    display: none !important;
-  }
+  /* Тёмный оверлей снизу вверх — текст внизу читаемый */
   .hero-bg::after {
-    display: none !important;
+    display: block !important;
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(10,16,28,0.92) 0%,
+      rgba(10,16,28,0.75) 35%,
+      rgba(10,16,28,0.35) 65%,
+      rgba(10,16,28,0.05) 100%
+    );
   }
-  /* Content sits below photo on solid beige */
   .hero-inner {
-    position: static !important;
-    z-index: auto;
-    background: #F7F4EE;
-    padding: 24px 20px 56px;
+    position: relative !important;
+    z-index: 2;
+    background: transparent !important;
+    padding: 0 20px 48px;
     max-width: 100%;
+    width: 100%;
   }
   .hero-inner .eyebrow {
-    font-size: 12px;
-    letter-spacing: 0.12em;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-bottom: 14px;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: rgba(247,244,238,0.65) !important;
+    margin-bottom: 12px;
   }
   .hero-inner h1.display {
-    font-size: clamp(44px, 13vw, 72px);
-    line-height: 0.92;
+    font-size: clamp(48px, 14vw, 72px);
+    line-height: 0.9;
+    color: #F7F4EE !important;
+  }
+  .hero-inner h1.display em {
+    color: var(--accent) !important;
   }
   .hero-inner .lead {
-    font-size: 18px !important;
-    line-height: 1.55;
-    margin-top: 16px !important;
-    color: #2D3748 !important;
+    font-size: 17px !important;
+    line-height: 1.5;
+    margin-top: 14px !important;
+    color: rgba(247,244,238,0.88) !important;
   }
   .hero-meta-row {
     display: flex !important;
-    flex-direction: row !important;
     flex-wrap: wrap;
-    gap: 8px 12px;
-    margin-block: 22px 28px;
-    padding: 0;
+    gap: 6px 10px;
+    margin-block: 20px 24px;
   }
   .hero-chip {
     display: inline-flex !important;
     align-items: center;
-    font-size: 15px;
+    font-size: 14px;
+    color: rgba(247,244,238,0.8) !important;
   }
-  .hero-chip-sep { font-size: 15px; color: var(--accent); opacity: 0.8; }
+  .hero-chip b { color: #F7F4EE !important; }
+  .hero-chip-sep { font-size: 14px; color: var(--accent); opacity: 0.7; }
   .btn.btn-primary {
     display: block;
     width: 100%;
     text-align: center;
-    padding: 19px 20px;
+    padding: 18px 20px;
     font-size: 17px;
+    background: var(--accent) !important;
+    color: #fff !important;
   }
-  .hero-free { font-size: 14px; margin-top: 12px; }
-  /* Expert tag: top-right corner of photo */
+  .hero-free {
+    font-size: 13px;
+    margin-top: 10px;
+    color: rgba(247,244,238,0.55) !important;
+  }
   .hero-expert-tag {
-    position: absolute;
-    top: 12px; right: 12px; bottom: auto;
-    padding: 8px 12px;
+    display: none;
   }
-  .hero-expert-tag .name { font-size: 13px; }
-  .hero-expert-tag .title { font-size: 9px; }
 }
 
 /* ── WHO IS THIS FOR ── */
