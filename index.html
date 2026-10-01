@@ -176,23 +176,60 @@ h3.subheading {
 }
 /* Мобильный: фото полный экран, текст внизу на плотном фоне */
 @media (max-width: 640px) {
-  .hero-bg { background-position: 60% top; }
+  /* Mobile: two-block layout — photo top, content bottom */
+  .hero {
+    flex-direction: column;
+    align-items: stretch;
+    min-height: 100svh;
+  }
+  .hero-bg {
+    position: relative !important;
+    height: 55vmax;
+    min-height: 280px;
+    max-height: 52vh;
+    background-position: center top;
+    flex-shrink: 0;
+  }
   .hero-bg::after {
-    background: linear-gradient(to top,
-      #F7F4EE 0%, #F7F4EE 38%,
-      rgba(247,244,238,0.8) 55%,
-      transparent 75%
+    background: linear-gradient(to bottom,
+      transparent 50%,
+      rgba(247,244,238,0.6) 80%,
+      #F7F4EE 100%
     );
   }
   .hero-inner {
-    padding-top: 52vh;
-    padding-bottom: 48px;
-    padding-left: 20px;
-    padding-right: 20px;
+    position: relative;
+    z-index: 2;
+    background: #F7F4EE;
+    padding: 24px 20px 52px;
     max-width: 100%;
+    margin-top: -24px;
   }
-  .hero-inner h1.display { font-size: clamp(36px, 10vw, 56px); }
-  .hero-expert-tag { top: 16px; right: 12px; bottom: auto; }
+  .hero-inner h1.display {
+    font-size: clamp(44px, 13vw, 68px);
+    line-height: 0.9;
+  }
+  .hero-inner .eyebrow { font-size: 11px; margin-bottom: 14px; }
+  .hero-inner .lead {
+    font-size: 17px !important;
+    line-height: 1.5;
+    margin-top: 16px !important;
+    color: #2D3748 !important;
+  }
+  .hero-meta-row { gap: 10px; margin-block: 22px 30px; }
+  .hero-chip { font-size: 14px; }
+  .btn.btn-primary {
+    display: block; width: 100%; text-align: center;
+    padding: 18px 24px; font-size: 16px;
+  }
+  .hero-free { font-size: 13px; margin-top: 12px; }
+  .hero-expert-tag {
+    position: absolute;
+    bottom: 12px; right: 12px; top: auto;
+    padding: 10px 14px;
+  }
+  .hero-expert-tag .name { font-size: 13px; }
+  .hero-expert-tag .title { font-size: 9px; }
 }
 
 /* ── WHO IS THIS FOR ── */
@@ -316,6 +353,58 @@ blockquote.expert-quote {
 .program-grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 20px; margin-top: 48px;
+}
+
+/* Timeline program */
+.prog-timeline {
+  margin-top: 52px;
+  display: flex; flex-direction: column; gap: 0;
+  position: relative;
+}
+.prog-timeline::before {
+  content: ''; position: absolute;
+  left: 28px; top: 16px; bottom: 16px; width: 1px;
+  background: linear-gradient(to bottom, var(--accent-l), var(--accent), var(--accent-l));
+}
+.prog-item {
+  display: flex; gap: 32px; align-items: flex-start;
+  padding: 28px 0 28px;
+  border-bottom: 1px solid rgba(184,150,90,0.10);
+  position: relative;
+}
+.prog-item:last-child { border-bottom: none; }
+.prog-num {
+  flex-shrink: 0; width: 56px; height: 56px;
+  border-radius: 50%;
+  background: var(--navy); color: var(--bg);
+  font-size: 13px; font-weight: 700; letter-spacing: 0.05em;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; z-index: 1;
+  border: 2px solid var(--accent);
+}
+.prog-item--highlight .prog-num {
+  background: var(--accent); color: var(--navy);
+}
+.prog-content { flex: 1; min-width: 0; }
+.prog-time {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 8px;
+}
+.prog-tags {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px;
+}
+.prog-tag {
+  display: inline-block;
+  font-size: 11px; font-weight: 500; letter-spacing: 0.06em;
+  padding: 3px 10px; border-radius: 2px;
+  border: 1px solid var(--accent-l);
+  color: var(--accent);
+  text-transform: uppercase;
+}
+@media (max-width: 640px) {
+  .prog-timeline::before { left: 20px; }
+  .prog-num { width: 40px; height: 40px; font-size: 11px; }
+  .prog-item { gap: 18px; padding: 22px 0; }
 }
 .prog-card {
   background: var(--surface); border: 1px solid var(--accent-l);
@@ -576,23 +665,75 @@ blockquote.expert-quote {
   <div class="container">
     <div class="eyebrow">Программа · 7 октября</div>
     <h2 class="heading">Что разберём за 90 минут</h2>
-    <p class="body-text" style="margin-top:12px; max-width:560px">Живой мастер-майнд — не лекция. Разбираем реальные ситуации участников.</p>
-    <div class="program-grid">
-      <div class="prog-card">
-        <span class="prog-badge">Блок 1</span>
-        <h3 class="prog-title">Почему ребёнок «не хочет» учиться</h3>
-        <p class="prog-body">Найдём настоящий механизм сопротивления — не «лень» и не «характер». То, что на самом деле за этим стоит. Конкретно — для твоего ребёнка.</p>
+    <p class="body-text" style="margin-top:12px; max-width:600px">Живой мастер-майнд — не лекция. Разбираем реальные ситуации участников. Выйдешь не с теорией — с пониманием, что делать именно тебе.</p>
+
+    <div class="prog-timeline">
+
+      <div class="prog-item">
+        <div class="prog-num">01</div>
+        <div class="prog-content">
+          <div class="prog-time">0–15 мин</div>
+          <h3 class="prog-title">Диагностика: что стоит за «не хочет учиться»</h3>
+          <p class="prog-body">Поймём, где именно находится сложность твоего ребёнка. Хочет ли он, верит ли, что сможет, умеет ли организовать действие — это три разных проблемы с разными решениями. Одинаковое поведение ребёнка может иметь совершенно разные причины.</p>
+          <div class="prog-tags">
+            <span class="prog-tag">мотивация</span>
+            <span class="prog-tag">саморегуляция</span>
+          </div>
+        </div>
       </div>
-      <div class="prog-card">
-        <span class="prog-badge">Блок 2</span>
-        <h3 class="prog-title">Как перестать тащить и начать вести</h3>
-        <p class="prog-body">Разница между «заставить» и «научить». Как передавать самостоятельность постепенно — не бросая, не продавливая.</p>
+
+      <div class="prog-item">
+        <div class="prog-num">02</div>
+        <div class="prog-content">
+          <div class="prog-time">15–35 мин</div>
+          <h3 class="prog-title">Роль родительского контроля в этой системе</h3>
+          <p class="prog-body">Почему «просто перестать контролировать» не работает. Разберём, какую функцию ты уже занял в системе учёбы своего ребёнка — и что происходит, когда ты из неё выходишь. Когда помощь превращается в выполнение его функций.</p>
+          <div class="prog-tags">
+            <span class="prog-tag">границы</span>
+            <span class="prog-tag">ответственность</span>
+          </div>
+        </div>
       </div>
-      <div class="prog-card">
-        <span class="prog-badge">Блок 3</span>
-        <h3 class="prog-title">Живой разбор твоей ситуации</h3>
-        <p class="prog-body">Выйдешь не с теорией — с пониманием, что делать именно тебе. Разбираем кейсы участников вживую.</p>
+
+      <div class="prog-item">
+        <div class="prog-num">03</div>
+        <div class="prog-content">
+          <div class="prog-time">35–55 мин</div>
+          <h3 class="prog-title">Как работают внешние инструменты: телефон, оценки, награды</h3>
+          <p class="prog-body">Что делать с телефоном, наградами, наказаниями и плохими оценками. Что действительно поддерживает мотивацию — а что постепенно делает ребёнка зависимым от внешнего управления взрослого.</p>
+          <div class="prog-tags">
+            <span class="prog-tag">внешние мотиваторы</span>
+            <span class="prog-tag">границы</span>
+          </div>
+        </div>
       </div>
+
+      <div class="prog-item">
+        <div class="prog-num">04</div>
+        <div class="prog-content">
+          <div class="prog-time">55–75 мин</div>
+          <h3 class="prog-title">Как постепенно передавать самостоятельность</h3>
+          <p class="prog-body">Не «это теперь твоя проблема» и не бесконечный контроль — а конкретный план. Как снижать количество напоминаний. Как разделить ответственность между родителем и ребёнком на каждом этапе. Что менять в своём поведении уже сейчас.</p>
+          <div class="prog-tags">
+            <span class="prog-tag">передача управления</span>
+            <span class="prog-tag">план действий</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="prog-item prog-item--highlight">
+        <div class="prog-num">05</div>
+        <div class="prog-content">
+          <div class="prog-time">75–90 мин</div>
+          <h3 class="prog-title">Живой разбор: твоя ситуация</h3>
+          <p class="prog-body">Разбираем кейсы участников вживую. Задашь вопрос о своём ребёнке — получишь конкретный ответ, а не общий совет.</p>
+          <div class="prog-tags">
+            <span class="prog-tag">живой разбор</span>
+            <span class="prog-tag">вопросы участников</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
