@@ -177,48 +177,44 @@ h3.subheading {
 }
 /* Мобильный: фото полный экран, текст внизу на плотном фоне */
 @media (max-width: 640px) {
+  /* ── MOBILE HERO: stacked layout ── */
   .hero {
     flex-direction: column;
     align-items: stretch;
-    min-height: 100svh;
+    min-height: 0;
   }
-  /* Photo block — fixed height, Viktoria fully visible */
+  /* Photo occupies top portion — NO overlay gradient, clear photo */
   .hero-bg {
     position: relative !important;
-    height: 60vw;
-    min-height: 300px;
-    max-height: 56vh;
-    background-position: center 15%;
+    height: 72vw;
+    min-height: 280px;
+    max-height: 50vh;
+    background-position: center 10%;
+    background-size: cover;
     flex-shrink: 0;
   }
+  /* Kill the desktop gradient completely on mobile */
   .hero-bg::after {
-    background: linear-gradient(to bottom,
-      transparent 55%,
-      rgba(247,244,238,0.5) 82%,
-      #F7F4EE 100%
-    );
+    display: none !important;
   }
-  /* Content block */
+  /* Content sits below photo on solid beige */
   .hero-inner {
-    position: relative;
-    z-index: 2;
+    position: static !important;
+    z-index: auto;
     background: #F7F4EE;
-    padding: 20px 20px 52px;
+    padding: 24px 20px 56px;
     max-width: 100%;
-    margin-top: -20px;
   }
-  /* Eyebrow — one line, no wrap */
   .hero-inner .eyebrow {
     font-size: 10px;
     letter-spacing: 0.12em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    display: flex;
     margin-bottom: 12px;
   }
   .hero-inner h1.display {
-    font-size: clamp(42px, 12.5vw, 64px);
+    font-size: clamp(40px, 12vw, 62px);
     line-height: 0.92;
   }
   .hero-inner .lead {
@@ -227,13 +223,11 @@ h3.subheading {
     margin-top: 14px !important;
     color: #2D3748 !important;
   }
-  /* Chips — flex row, no bullets */
   .hero-meta-row {
     display: flex !important;
     flex-direction: row !important;
     flex-wrap: wrap;
-    list-style: none !important;
-    gap: 8px;
+    gap: 6px 10px;
     margin-block: 18px 24px;
     padding: 0;
   }
@@ -242,7 +236,7 @@ h3.subheading {
     align-items: center;
     font-size: 13px;
   }
-  .hero-chip::before { display: none !important; }
+  .hero-chip-sep { font-size: 13px; color: var(--accent); opacity: 0.6; }
   .btn.btn-primary {
     display: block;
     width: 100%;
@@ -251,6 +245,7 @@ h3.subheading {
     font-size: 15px;
   }
   .hero-free { font-size: 13px; margin-top: 10px; }
+  /* Expert tag: top-right corner of photo */
   .hero-expert-tag {
     position: absolute;
     top: 12px; right: 12px; bottom: auto;
