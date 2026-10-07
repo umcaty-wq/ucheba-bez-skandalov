@@ -930,8 +930,19 @@ blockquote.expert-quote {
     <script>
     function handleReg(e) {
       e.preventDefault();
-      fbq && fbq('track', 'Lead');
-      window.open( + WA + , '_blank');
+      var btn = e.target.querySelector('button[type=submit]');
+      btn.disabled = true;
+      btn.textContent = 'Отправляем...';
+      var name = e.target.querySelector('input[name=name]').value;
+      var phone = e.target.querySelector('input[name=phone]').value;
+      fetch('https://script.google.com/macros/s/AKfycbxg_uX1sDJr48e3tPsOus3fsXZC9_WPPkEyICWIVcbPQ8QKTl-t8xngVmF0p5V7tJK9/exec', {
+        method: 'POST',
+        body: JSON.stringify({name: name, phone: phone})
+      }).finally(function() {
+        fbq && fbq('track', 'Lead');
+        window.open('https://chat.whatsapp.com/IpiDB196UeTA50zPis4Pq2?s=sw&p=i&mlu=0&ilr=4', '_blank');
+        btn.textContent = 'Вы зарегистрированы ✓';
+      });
     }
     </script>
   </div>
