@@ -729,6 +729,14 @@ blockquote.expert-quote {
   .site-footer .container { flex-direction:column; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+.reg-form { display:flex; flex-direction:column; align-items:center; gap:16px; margin-top:32px; width:100%; max-width:480px; margin-inline:auto; }
+.reg-fields { display:flex; flex-direction:column; gap:12px; width:100%; }
+.reg-input { width:100%; box-sizing:border-box; padding:18px 20px; font-size:17px; font-family:var(--sans); border:1.5px solid var(--accent-l); border-radius:6px; background:#fff; color:var(--fg); outline:none; transition:border-color .2s; }
+.reg-input:focus { border-color:var(--accent); }
+.reg-input::placeholder { color:#9CA3AF; }
+.reg-form .btn-primary { width:100%; }
+
 </style>
 
 <!-- ═══ 1. ГЛАВНЫЙ ЭКРАН ═══ -->
@@ -911,8 +919,21 @@ blockquote.expert-quote {
     <div class="eyebrow eyebrow--center" style="justify-content:center">Бесплатный онлайн-мастер-класс для родителей</div>
     <h2 class="heading" style="max-width:760px; margin-inline:auto">Учёба <em>без скандалов</em></h2>
     <div style="display:flex; justify-content:center; margin-top:8px"><div class="time-strip"><span class="ts-main"><span>10 октября</span> · <span>15:00 МСК</span></span><span class="ts-sub">90 минут · онлайн · бесплатно</span></div></div>
-    <div><a href="https://chat.whatsapp.com/IpiDB196UeTA50zPis4Pq2?s=sw&p=i&mlu=0&ilr=4" target="_blank" rel="noopener" class="btn btn-primary btn-large">Зарегистрироваться бесплатно</a></div>
-    <p class="btn-note">Ссылку и напоминания пришлём в WhatsApp</p>
+    <form class="reg-form" id="reg-form" onsubmit="handleReg(event)">
+      <div class="reg-fields">
+        <input class="reg-input" type="text" name="name" placeholder="Ваше имя" required autocomplete="name">
+        <input class="reg-input" type="tel" name="phone" placeholder="Телефон или email" required autocomplete="tel">
+      </div>
+      <button type="submit" class="btn btn-primary btn-large">Зарегистрироваться бесплатно</button>
+      <p class="btn-note">Ссылку и напоминания пришлём в WhatsApp</p>
+    </form>
+    <script>
+    function handleReg(e) {
+      e.preventDefault();
+      fbq && fbq('track', 'Lead');
+      window.open( + WA + , '_blank');
+    }
+    </script>
   </div>
 </section>
 
