@@ -732,9 +732,10 @@ blockquote.expert-quote {
 
 .reg-form { display:flex; flex-direction:column; align-items:center; gap:16px; margin-top:32px; width:100%; max-width:480px; margin-inline:auto; }
 .reg-fields { display:flex; flex-direction:column; gap:12px; width:100%; }
-.reg-input { width:100%; box-sizing:border-box; padding:18px 20px; font-size:17px; font-family:var(--sans); border:1.5px solid var(--accent-l); border-radius:6px; background:#fff; color:var(--fg); outline:none; transition:border-color .2s; }
+.reg-input { width:100%; box-sizing:border-box; padding:18px 20px; font-size:17px; font-family:var(--sans); border:1.5px solid var(--accent-l); border-radius:6px; background:#fff; color:#1E2C45; outline:none; transition:border-color .2s; }
 .reg-input:focus { border-color:var(--accent); }
-.reg-input::placeholder { color:#9CA3AF; }
+.reg-input::placeholder { color:#9CA3AF; opacity:1; }
+.reg-input, .reg-input:focus { -webkit-text-fill-color: #1E2C45 !important; color: #1E2C45 !important; }
 .reg-form .btn-primary { width:100%; }
 
 </style>
@@ -921,20 +922,56 @@ blockquote.expert-quote {
     <div style="display:flex; justify-content:center; margin-top:8px"><div class="time-strip"><span class="ts-main"><span>10 октября</span> · <span>15:00 МСК</span></span><span class="ts-sub">90 минут · онлайн · бесплатно</span></div></div>
     <form class="reg-form" id="reg-form" onsubmit="handleReg(event)">
       <div class="reg-fields">
-        <input class="reg-input" type="text" name="name" placeholder="Ваше имя" required autocomplete="name">
-        <input class="reg-input" type="tel" name="phone" placeholder="Телефон" required autocomplete="tel">
+        <input class="reg-input" type="text" name="name" placeholder="Ваше имя" required autocomplete="name" minlength="2" pattern="[А-Яа-яЁёA-Za-z\s\-]+" title="Введите имя (только буквы)" oninput="this.value=this.value.replace(/[^А-Яа-яЁёA-Za-z\s\-]/g,'')">
+        <input class="reg-input" type="tel" name="phone" placeholder="+7 (___) ___-__-__" required autocomplete="tel" inputmode="numeric" oninput="formatPhone(this)" onkeydown="phoneKey(event,this)">
       </div>
       <button type="submit" class="btn btn-primary btn-large">Зарегистрироваться бесплатно</button>
       <p class="btn-note">Ссылку и напоминания пришлём в WhatsApp</p>
     </form>
     <script>
+    function formatPhone(input) {
+      var v = input.value.replace(/\D/g, '');
+      if (v.startsWith('8')) v = '7' + v.slice(1);
+      if (v.startsWith('7')) {
+        var m = v.match(/^(\d{1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
+        if (m) {
+          input.value = '+7'
+            + (m[2] ? ' (' + m[2] : '')
+            + (m[2].length === 3 ? ') ' : '')
+            + (m[3] || '')
+            + (m[3].length === 3 ? '-' : '')
+            + (m[4] || '')
+            + (m[4].length === 2 ? '-' : '')
+            + (m[5] || '');
+        }
+      } else if (v.length > 0) {
+        input.value = '+' + v.slice(0, 15);
+      }
+    }
+    function phoneKey(e, input) {
+      if (e.key === 'Backspace' && input.value.length <= 3) {
+        input.value = '';
+      }
+    }
     function handleReg(e) {
       e.preventDefault();
       var btn = e.target.querySelector('button[type=submit]');
       btn.disabled = true;
       btn.textContent = 'Отправляем...';
       var name = e.target.querySelector('input[name=name]').value;
-      var phone = e.target.querySelector('input[name=phone]').value;
+      var rawPhone = e.target.querySelector('input[name=phone]').value;
+      var phone = rawPhone.replace(/\D/g, '');
+      // Валидация
+      if (name.trim().length < 2) {
+        alert('Введите ваше имя');
+        btn.disabled = false; btn.textContent = 'Зарегистрироваться бесплатно';
+        return;
+      }
+      if (phone.length < 10) {
+        alert('Введите корректный номер телефона');
+        btn.disabled = false; btn.textContent = 'Зарегистрироваться бесплатно';
+        return;
+      }
       // Сначала сохраняем данные, потом редиректим
       fetch('https://script.google.com/macros/s/AKfycbxg_uX1sDJr48e3tPsOus3fsXZC9_WPPkEyICWIVcbPQ8QKTl-t8xngVmF0p5V7tJK9/exec', {
         method: 'POST',
