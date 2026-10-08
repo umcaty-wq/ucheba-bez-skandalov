@@ -963,26 +963,21 @@ blockquote.expert-quote {
         btn.disabled = false; btn.textContent = 'Зарегистрироваться бесплатно';
         return;
       }
-      // Сначала сохраняем данные, потом редиректим
-      fetch('https://script.google.com/macros/s/AKfycbxg_uX1sDJr48e3tPsOus3fsXZC9_WPPkEyICWIVcbPQ8QKTl-t8xngVmF0p5V7tJK9/exec', {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {'Content-Type': 'text/plain'},
-        body: JSON.stringify({name: name, phone: phone, email: email})
-      }).then(function() {
-        fbq && fbq('track', 'Lead');
-        btn.textContent = 'Вы зарегистрированы ✓';
-        setTimeout(function() {
-          window.location.href = 'https://t.me/+crgmxUQrd7gyZTky';
-        }, 500);
-      }).catch(function() {
-        // Даже при ошибке сети — всё равно редиректим
-        fbq && fbq('track', 'Lead');
-        btn.textContent = 'Вы зарегистрированы ✓';
-        setTimeout(function() {
-          window.location.href = 'https://t.me/+crgmxUQrd7gyZTky';
-        }, 500);
-      });
+      // Отправляем данные в фоне (не блокирует редирект)
+      var payload = JSON.stringify({name: name, phone: rawPhone, email: email});
+      try {
+        navigator.sendBeacon('https://script.google.com/macros/s/AKfycbxg_uX1sDJr48e3tPsOus3fsXZC9_WPPkEyICWIVcbPQ8QKTl-t8xngVmF0p5V7tJK9/exec', payload);
+      } catch(err) {
+        fetch('https://script.google.com/macros/s/AKfycbxg_uX1sDJr48e3tPsOus3fsXZC9_WPPkEyICWIVcbPQ8QKTl-t8xngVmF0p5V7tJK9/exec', {
+          method: 'POST', mode: 'no-cors', body: payload
+        });
+      }
+      // Сразу показываем результат и редиректим — не ждём ответа сервера
+      fbq && fbq('track', 'Lead');
+      btn.textContent = 'Вы зарегистрированы ✓';
+      setTimeout(function() {
+        window.location.href = 'https://t.me/+crgmxUQrd7gyZTky';
+      }, 800);
     }
     </script>
   </div>
